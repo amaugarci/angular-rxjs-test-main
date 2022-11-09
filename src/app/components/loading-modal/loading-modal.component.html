@@ -1,0 +1,5 @@
+<div class="spinner-container" [ngClass]="spinnerClass">
+  <mat-spinner [diameter]="diameter" [strokeWidth]="strokeWidth"></mat-spinner>
+</div>
+<div *ngIf="title" class="title">{{title}}</div>
+<div *ngIf="description" class="description">{{description}}</div>

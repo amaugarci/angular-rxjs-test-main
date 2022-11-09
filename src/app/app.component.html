@@ -1,0 +1,14 @@
+<button mat-raised-button color="primary" 
+[routerLink]="['/']">
+  home
+</button>
+<button mat-raised-button color="primary" [routerLink]="['/test/1/B']" [queryParams]="{j: 'LOREM'}">
+  test 1
+</button>
+<button mat-raised-button color="primary" [routerLink]="['/test/2/A']" [queryParams]="{j: 'IPSUM'}">
+  test 2
+</button>
+<button mat-raised-button color="primary" [routerLink]="['/test/3']" [queryParams]="{q: 'MY DEFAULT SEARCH`'}">
+  test 3
+</button>
+<router-outlet></router-outlet>

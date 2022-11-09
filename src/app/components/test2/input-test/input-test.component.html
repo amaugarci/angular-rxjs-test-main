@@ -1,0 +1,24 @@
+<h1>INPUT TEST {{delta$ | async}}</h1>
+
+<h3>tags</h3>
+<mat-chip-list>
+  <mat-chip *ngFor="let c of allTags$ | async">
+    {{c}}
+  </mat-chip>
+</mat-chip-list>
+<hr>
+<input #queryInput id="queryInput" type="text">
+<button mat-button-raised (click)="this.query$.next(queryInput.value)">Search</button>
+<hr>
+<h1>FILTERED DATA : {{query$ | async}}</h1>
+
+<ul>
+  <li *ngFor="let r of filteredData$ | async">{{r.v.toString(16)}}</li>
+</ul>
+<hr>
+
+<h1>ALL DATA</h1>
+
+<ul>
+  <li *ngFor="let r of testData | async">{{r.v.toString(16)}}</li>
+</ul>

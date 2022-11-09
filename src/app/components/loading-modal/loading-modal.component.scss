@@ -1,0 +1,24 @@
+.spinner-container {
+    padding: 16px;
+}
+
+.title,
+.description {
+    font-family: Roboto, sans-serif;
+    font-size: 19px;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: darkgray;
+}
+
+.title {
+    font-weight: 'medium';
+    line-height: 1.16;
+}
+
+.description {
+    font-weight: normal;
+    line-height: 1.68;
+}
