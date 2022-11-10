@@ -16,18 +16,17 @@ export class CustomRouteDataResolver implements Resolve<string> {
   constructor(
     private loadingSpinner: LoadingSpinnerOverlayService
   ) {
-    setTimeout(() => {
-      console.log(`completionNotifier$.next`)
-      this.completionNotifier$.next(true);
-    }, 2000)
+    
   }
 
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<string> {
-
-
+    setTimeout(() => {
+      console.log(`completionNotifier$.next`)
+      this.completionNotifier$.next(true);
+    }, 2000)
     return of([route.params, route.queryParams])
       .pipe(
         tap(() => {

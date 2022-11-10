@@ -13,7 +13,7 @@
 <h1>FILTERED DATA : {{query$ | async}}</h1>
 
 <ul>
-  <li *ngFor="let r of filteredData$ | async">{{r.v.toString(16)}}</li>
+  <li *ngFor="let c of filteredData$ | async">{{c.v.toString(16) }}</li>
 </ul>
 <hr>
 

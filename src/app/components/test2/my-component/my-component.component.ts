@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, combineLatest, first, firstValueFrom, map, tap } from 'rxjs';
+import { BehaviorSubject,from, combineLatest, first, firstValueFrom, forkJoin, map, of, reduce, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-my-component',
@@ -24,14 +24,17 @@ export class MyComponentComponent implements OnInit {
   displayText = 'default';
 
   compositeValue = combineLatest([this.partB, this.partA, this.partC])
-    .pipe(map(([a, b, c]) => {
+    .pipe(
+      map(([a, b, c]) => {
+      if(this.displayText=='A-IPSUM')
+        return `${b}.${a}.${c.reduce((acc, cur) => acc + cur, 0)}`
       return `${a}.${b}.${c}`
     }))
 
   constructor(private activatedRoute: ActivatedRoute) { }
 
   async ngOnInit() {
-
+  console.log(this.activatedRoute.data);
     //do not remove or relocate
     setTimeout(() => {
       this.partC.next([1, 2, 3, 4])
@@ -48,3 +51,4 @@ export class MyComponentComponent implements OnInit {
   }
 
 }
+  

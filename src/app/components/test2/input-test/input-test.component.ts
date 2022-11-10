@@ -1,17 +1,20 @@
-import { AfterContentInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterContentInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { concatMap, filter, first, map, mergeAll, Subject, tap, toArray } from 'rxjs';
+import { concatMap, filter, first, map, mergeAll, BehaviorSubject, Subject, tap, toArray, of } from 'rxjs';
 
 @Component({
   selector: 'app-input-test',
   templateUrl: './input-test.component.html',
   styleUrls: ['./input-test.component.css']
 })
-export class InputTestComponent implements AfterContentInit {
-
-  query$ = new Subject<string>();
+export class InputTestComponent implements AfterContentInit, OnInit {
+  
+  ngOnInit(): void {
+    
+  }
+  query$ = new BehaviorSubject<string>('');
   delta$ = new Subject<number>();
-
+  getRandomIntInclusive=getRandomIntInclusive;
   @ViewChild("queryInput", { static: true }) queryInput: ElementRef;
 
   testData = of([
@@ -29,22 +32,23 @@ export class InputTestComponent implements AfterContentInit {
 
   filteredData$ = this.query$
     .pipe(
-      map(q => q.toUpperCase()),
+      map(q => q.toLowerCase()),
       concatMap((q) => this.testData
         .pipe(
           mergeAll(),
           filter(({ tags }) => tags.indexOf(q) > -1),
-          first(),
-          toArray(),
+          tap((q)=>console.log(q)),
+          // first(),
+          toArray()
         )),
     );
-
   allTags$ = this.testData
     .pipe(
       mergeAll(),
       map(({ tags }) => tags),
       mergeAll(),
-      toArray()
+      toArray(),
+      map((q=>{return  Array.from(q.reduce((m, t) => m.set(t, t), new Map()).values())})),
     );
 
   constructor(private activatedRoute: ActivatedRoute) {
@@ -52,12 +56,11 @@ export class InputTestComponent implements AfterContentInit {
   }
 
   async ngAfterContentInit() {
-
     this.activatedRoute.queryParams
       .pipe(
         first(),
-        tap(({ q }) => { this.queryInput.nativeElement.value = q; }),
-      )
+        tap(({ q }) => { this.queryInput.nativeElement.value = q; console.log(q) }),
+      ).subscribe(q=>{console.log(q); this.query$.next(q['q'])});
 
   }
 
